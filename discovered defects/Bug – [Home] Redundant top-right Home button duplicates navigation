@@ -1,0 +1,71 @@
+# Bug – [Home] Redundant top-right Home button duplicates navigation
+
+**Issue Type**: Bug  
+**Summary / Title**: [Home] Redundant top-right Home button duplicates navigation  
+**Priority**: P3  
+**Severity**: Minor  
+**Status**: Open  
+**Component(s)**: Frontend, UI/UX  
+**Epic Link**: NAV-EPIC  
+**Labels**: area:home, platform:web, ux, ia, usability
+
+---
+
+## Environment
+- **App Build / Commit**: TBD
+- **Browser & Version**: Chrome 126
+- **OS**: Windows 11
+- **Viewport**: 1366x850
+- **API**: json-server `http://localhost:3004`
+- **Date/Time (TZ)**: 2025-08-18 12:15 CET
+
+## Preconditions
+- The app shows a top-right button that routes to Home while Home is already accessible via main navigation.
+
+## Steps to Reproduce
+1. Open any screen (e.g., **Notes**).
+2. Observe the **top-right button** that routes to **Home**.
+3. Click the button to return to **Home**.
+4. Compare with the existing Home navigation entry (e.g., **Home** in the main menu/logo).
+
+## Expected Result
+- Primary navigation to **Home** is **singular and consistent**.
+- Redundant Home controls are avoided to reduce noise and decision fatigue.
+- If such a control remains, it should:
+  - Use a consistent pattern (e.g., logo click).
+  - Be **hidden/disabled** when already on Home.
+
+## Actual Result
+- An **extra Home button** in the top-right duplicates the main Home navigation, making navigation feel redundant and potentially confusing.
+
+**Reproducibility**: 100% (manual exploratory)
+
+## User Impact / Business Impact
+- Adds cognitive load; degrades information architecture clarity.
+- Can lead to inconsistent mental model of navigation patterns.
+
+## Scope / Affected Areas
+- Global header / top-right actions; Home navigation patterns.
+
+## Workaround
+- Users can ignore the extra control, but the UI remains confusing.
+
+## Evidence
+- **Screenshot**: `cypress/reports/screenshots/Home - Redundant top-right button.png`
+
+## Xray / Jira Links (optional)
+- **Requirement**:  
+- **Test(s)**:  
+- **Test Execution**:  
+- **Test Plan**:  
+
+## Root Cause Hypothesis
+- UI includes a secondary Home shortcut not aligned with the design system's navigation rules.
+
+## Acceptance Criteria (Fix)
+- Consolidate Home navigation to a single primary entry (menu item or logo link).
+- If a shortcut is justified, ensure it:
+  - Matches the design system style.
+  - Is not displayed (or is disabled) when on Home.
+- Add E2E test:
+  - **HOM-006**: When on Home, redundant Home control is hidden/disabled; from Notes, only one clear path to Home is visible.

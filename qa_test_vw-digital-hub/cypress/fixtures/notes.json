@@ -1,0 +1,6 @@
+[
+    { "title": "E2E Seeded 1", "content": "Fixture note 1" },
+    { "title": "E2E Seeded 2", "content": "Fixture note 2" },
+    { "title": "E2E Seeded 3", "content": "Fixture note 3" },
+    { "title": "E2E Search Target", "content": "Should be visible when searching" } 
+]

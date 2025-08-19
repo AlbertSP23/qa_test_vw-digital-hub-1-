@@ -1,0 +1,51 @@
+# Defects Summary – Notes & Navigation (2025-08-18)
+
+## Executive Summary
+- **Total defects:** 9  
+- **Severity / Priority mix:**  
+  - **Major / P2:** 4 (functional, content/UX, testability)  
+  - **Minor / P3:** 5 (UI/UX/IA/a11y polish)  
+- **Release gate:** **NO-GO** (see conclusion).  
+- **Key risks:** data loss risk on delete, stale list after deletion, lack of stable test IDs blocking reliable automation, uncontrolled text overflow affecting readability and layout.
+
+## Scope
+Exploratory testing of Home and Notes (list, detail, create, delete, search UX). Desktop viewport only.
+
+## Environment
+- App: local dev (json-server + client)
+- Browser: Chrome 126 (Windows 11)
+- Viewport: 1366×850
+
+## Defect Catalog
+| ID | Title | Severity | Priority | Area | Type |
+|---|---|---|---|---|---|
+| BUG-Notes-Delete-No-Confirm | Deleting a note happens without confirmation (data loss risk) | **Major** | **P2** | Notes | Functional / UX |
+| BUG-Notes-List-Not-Refreshed-After-Delete | List does not refresh after deleting a note | **Major** | **P2** | Notes | Functional / UX |
+| BUG-Notes-No-Char-Limits-Overflow | No character limits cause overflow and unreadable cards | **Major** | **P2** | Notes | UI / UX / Content |
+| BUG-Notes-Missing-Test-IDs-for-Buttons | Missing stable test IDs (data-cy) for interactive elements | **Major** | **P2** | Global | Testability / Maintainability |
+| BUG-Notes-Delete-Hover-Animation-Misalignment | Delete action hover animation/icon misalignment | Minor | P3 | Notes | UI / UX |
+| BUG-Notes-Cancel-Button-No-Hover-Feedback | Cancel button lacks hover/active visual feedback | Minor | P3 | Notes | UI / Usability |
+| BUG-Notes-Create-Plus-Outside-Notes | Create (+) button is outside the Notes context/menu | Minor | P3 | Notes | UX / IA |
+| BUG-Notes-Form-Fields-Low-Emphasis | Title and Content fields have low visual emphasis in create form | Minor | P3 | Notes | UI / A11y / Usability |
+| BUG-Home-Redundant-TopRight-Home-Button | Redundant top-right Home button duplicates navigation | Minor | P3 | Home | UX / IA |
+
+> Detailed bug cards live in: `tickets/`
+
+## Risk Assessment
+- **Data integrity & user trust:** Immediate delete without confirmation and non-refreshing list create inconsistent outcomes and perceived failures, leading to repeated destructive actions.  
+- **Readability & layout stability:** Unbounded content breaks card layout and readability; potential performance concerns with extreme input sizes.  
+- **Automation & regression safety:** Absence of stable selectors (`data-cy`) severely limits E2E coverage and undermines regression confidence for future releases.  
+- **UX consistency & a11y:** Multiple polish issues (hover states, emphasis, IA) reduce usability and can hinder discoverability.
+
+## Recommendation
+- **Status:** **NOT READY for Production**  
+- **Required before re-evaluation:**
+  1. Implement **delete confirmation** and **list refresh/optimistic update**.
+  2. Add **character limits** (title/content) and **card truncation/clamping**.
+  3. Adopt a **data-cy selector contract** for all interactive controls.
+  4. Address UI/UX polish: hover feedback, field emphasis, IA placement of Create (+), redundant Home button.
+
+- **Regression Plan:** After fixes, run full E2E regression (CRUD + search), visual checks on hover states, and a11y spot-checks. Ensure CI pipeline imports results into Xray and attaches evidence.
+
+## Conclusion
+> Given the errors found, the state of development contains enough errors of sufficient severity to be returned to the development team so that the problems can be solved and a regression test can be performed on the code again.
