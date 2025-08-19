@@ -26,7 +26,7 @@
 - Console logs: 
 - Network HAR or request/response excerpts: 
 
-**Xray/Jira Links (opcional)**:
+**Xray/Jira**:
 - Requirement: 
 - Test(s): 
 - Test Execution: 
